@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AdCatalog</string>
+    <string name="admob_id">INSERT_YOUR_ADMOB_ID_HERE</string>
+    <string name="adCatalog_banners">Banners</string>
+    <string name="adCatalog_interstitials">Interstitials</string>
+    <string name="adCatalog_test_mode_off">Test Mode Off</string>
+    <string name="adCatalog_test_mode_on">Test Mode On</string>
+    <string name="banners_title">Banners</string>
+    <string name="banners_standard_dimensions">320x50</string>
+    <string name="banners_iab_mrect_dimensions">300x250</string>
+    <string name="interstitials_title">Interstitials</string>
+    <string name="interstitials_basic">Basic</string>
+    <string name="interstitials_game_levels">Game Levels</string>
+    <string name="interstitials_video_preroll">Video Pre-Roll</string>
+    <string name="interstitials_page_swipe">Page Swipe</string>
+    <string name="interstitials_use_cases">Use Cases</string>
+    <string name="interstitials_splash">Splash</string>
+    <string name="videoPreroll_title">Video Preroll</string>
+    <string name="videoPreroll_earthquake">Earthquake</string>
+    <string name="videoPreroll_fill_in_the_blanks">Fill In The Blanks</string>
+    <string name="videoPreroll_package_tracking">Package Tracking</string>
+    <string name="gameLevels_level_1">Level 1</string>
+    <string name="gameLevels_level_2">Level 2</string>
+    <string name="gameLevels_next">next </string>
+    <string name="pageSwipe_page_1">Page 1</string>
+    <string name="pageSwipe_page_2">Page 2</string>
+    <string name="pageSwipe_instructions_1">In this example, an interstitial is loaded on activity start and page swipe.  If ad is properly loaded, it will be presented directly after swiping.  Try swiping to a new screen.</string>
+    <string name="pageSwipe_instructions_2">An interstitial should have been displayed directly after the page swipe assuming the ad was loaded prior to the swipe.  A new ad is loading right now and will be displayed on your next swipe of it loaded properly.</string>
+</resources>
