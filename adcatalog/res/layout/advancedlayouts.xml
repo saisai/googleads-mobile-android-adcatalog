@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView android:id="@+id/advancedLayoutsTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/advancedLayouts_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+    <TextView android:id="@+id/examples"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/advancedLayouts_examples"/>
+    <Button android:id="@+id/tabbedView"
+        android:onClick="onClick"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/advancedLayouts_tabbed_view"/>
+    <Button android:id="@+id/listView"
+        android:onClick="onClick"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/advancedLayouts_list_view"/>
+    <Button android:id="@+id/openGLView"
+        android:onClick="onClick"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/advancedLayouts_opengl_view"/>
+    <Button android:id="@+id/scrollView"
+        android:onClick="onClick"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/advancedLayouts_scroll_view"/>
+</LinearLayout>

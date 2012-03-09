@@ -18,14 +18,21 @@ The is the Ad Catalog for Android.  The catalog was written and tested with the
 Google Admob Ads SDK version 4.3.1, and supports Android 1.6 or higher.
 
 The catalog provides:
-- Banners example featuring a standard banner and medium rectangle ad.
+- A simple banner example featuring a standard banner and medium rectangle ad.
+- Four banner layout examples:
+  1. TabbedView - a banner ad is persisted across tabs.
+  2. ListView - a banner ad is embedded into a list every k list items.
+  3. OpenGLView - a banner ad is docked to the bottom of the screen and sits
+                  outside an OpenGLView.
+  4. ScrollView - a banner ad is docked to the top of the screen and sits
+                  outside of a ScrollView.
 - Five interstitial examples:
   1. Basic - an interstitial ads loads and displays when ready.
   2. Game Levels - an interstitial is displayed before moving to level 2.
   3. Video Preroll - an interstitial is displayed prior to viewing a video.
   4. Page Swipe - an interstitial is displayed when swiping between screens.
   5. Splash - if this option is set, an interstitial will be displayed the next
-     time the app loads.
+              time the app loads.
 - Test mode toggle - determines whether to request test ads.
 
 Requirements:
@@ -43,8 +50,13 @@ Getting started with the Ad Catalog with Eclipse:
 2. Add the Google AdMob Ads Jar to your Eclipse Project.
    - Right click on your app project in Eclipse and select "Properties.
    - Select "Java Build Path" and the "Libraries" tab. Then click
-     "Add External JARs..." to add the Google AdMob Ads JAR.
-3. Insert your AdMob publisher ID into the application.
+     "Add External JARs..." to add the Google AdMob Ads Jar.
+3. Add the android-support-v4.jar to your Eclipse Project.
+   - The android-support-v4.jar is included in the Android Compatibility
+     package.  For instructions on how to download this package, visit
+     http://developer.android.com/sdk/compatibility-library.html#Downloading.
+   - Include this jar the same way as the Google AdMob Ads jar.
+4. Insert your AdMob publisher ID into the application.
    - In the admob_id string in res/values/strings.xml, replace the
      "INSERT_YOUR_ADMOB_ID_HERE" text with your publisher ID.
 

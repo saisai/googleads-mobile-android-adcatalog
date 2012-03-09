@@ -14,6 +14,7 @@
 
 package com.google.ad.catalog;
 
+import com.google.ad.catalog.layouts.AdvancedLayouts;
 import com.google.ads.Ad;
 import com.google.ads.AdListener;
 import com.google.ads.AdRequest;
@@ -34,7 +35,7 @@ import android.widget.ToggleButton;
  * will be provided with a menu to view banners or interstitials.  If the user
  * has previously set the splash toggle button, an interstitial will be loaded
  * when this activity is created.
- * 
+ *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
 public class AdCatalog extends Activity implements OnClickListener, AdListener {
@@ -68,23 +69,28 @@ public class AdCatalog extends Activity implements OnClickListener, AdListener {
   @Override
   public void onClick(View view) {
     final int id = view.getId();
-    Intent intent;
+    Intent intent = null;
     switch (id) {
       // Banners button click - go to Banners Activity.
       case R.id.Banners:
         intent = new Intent(AdCatalog.this, Banners.class);
-        startActivity(intent);
         break;
       // Interstitials button click - go to Interstitials Activity.
       case R.id.Interstitials:
         intent = new Intent(AdCatalog.this, Interstitials.class);
-        startActivity(intent);
+        break;
+      // Advanced Layouts button click - go to Advanced Layouts Activity.
+      case R.id.AdvancedLayouts:
+        intent = new Intent(AdCatalog.this, AdvancedLayouts.class);
         break;
       // Test Ads toggle click - change Test Mode preference.
       case R.id.toggleTestMode:
         isTestMode = !isTestMode;
         Log.d("AdCatalog", "Test mode: " + isTestMode);
         break;
+    }
+    if (intent != null) {
+      startActivity(intent);
     }
   }
 
