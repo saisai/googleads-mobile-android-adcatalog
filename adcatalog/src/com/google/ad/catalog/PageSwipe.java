@@ -1,4 +1,4 @@
-// Copyright 2011, Google Inc. All Rights Reserved.
+// Copyright 2011 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import android.widget.ViewFlipper;
 /**
  * This activity demonstrates displaying an interstitial in between page
  * swipes.  Use case could be displaying a gallery of photos.
- * 
+ *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
 public class PageSwipe extends Activity implements AdListener, OnTouchListener {
@@ -49,7 +49,7 @@ public class PageSwipe extends Activity implements AdListener, OnTouchListener {
 
     interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
     interstitial.setAdListener(this);
-    AdCatalog.loadInterstitial(interstitial);
+    interstitial.loadAd(AdCatalogUtils.createAdRequest());
   }
 
   /** Used to detect which direction a user swiped.  */
@@ -82,10 +82,10 @@ public class PageSwipe extends Activity implements AdListener, OnTouchListener {
   public void showInterstitial() {
     if (interstitial.isReady()) {
       interstitial.show();
-    } else { 
-      AdCatalog.loadInterstitial(interstitial);
+    } else {
+      interstitial.loadAd(AdCatalogUtils.createAdRequest());
     }
-  } 
+  }
 
   @Override
   public void onReceiveAd(Ad ad) {
@@ -96,7 +96,7 @@ public class PageSwipe extends Activity implements AdListener, OnTouchListener {
   public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
     Log.d("PageSwipe_Class", "I failed to receive an ad");
   }
-    
+
   @Override
   public void onPresentScreen(Ad ad) {
     Log.d("PageSwipe_Class", "Presenting screen");
@@ -106,9 +106,9 @@ public class PageSwipe extends Activity implements AdListener, OnTouchListener {
   public void onDismissScreen(Ad ad) {
     Log.d("PageSwipe_Class", "Dismissing screen");
   }
-    
+
   @Override
   public void onLeaveApplication(Ad ad) {
     Log.d("PageSwipe_Class", "Leaving application");
-  }  
+  }
 }

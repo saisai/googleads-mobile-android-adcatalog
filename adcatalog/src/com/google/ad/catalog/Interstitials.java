@@ -1,4 +1,4 @@
-// Copyright 2011, Google Inc. All Rights Reserved.
+// Copyright 2011 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import android.widget.ToggleButton;
 /**
  * Menu system for different methods of displaying interstitials. Setting the splash
  * toggle will load an interstitial next time the application is launched.
- * 
+ *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
 public class Interstitials extends Activity implements OnClickListener, AdListener {
@@ -51,9 +51,9 @@ public class Interstitials extends Activity implements OnClickListener, AdListen
       // Set the default toggle value from the preferences.
       SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
       splashToggleButton.setChecked(settings.getBoolean(Constants.PREFS_SPLASH_KEY, false));
-    } 
+    }
   }
-    
+
   /** Handles the on click events for each button. */
   @Override
   public void onClick(View view) {
@@ -62,7 +62,7 @@ public class Interstitials extends Activity implements OnClickListener, AdListen
     switch (id) {
       // Basic button click - load a basic interstitial.
       case R.id.basic:
-        AdCatalog.loadInterstitial(interstitial);
+        interstitial.loadAd(AdCatalogUtils.createAdRequest());
         break;
       // Game Levels button click - go to Game Levels Activity.
       case R.id.gameLevels:

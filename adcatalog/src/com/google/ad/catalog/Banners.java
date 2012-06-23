@@ -1,4 +1,4 @@
-// Copyright 2011, Google Inc. All Rights Reserved.
+// Copyright 2011 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,60 +26,81 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 /**
- * Showcases a standard banner ad and a medium rectangle ad.
- * 
+ * Showcases the different banner formats on both phones and tablets.  Phones
+ * will show a standard banner, a medium rectangle, and a smart banner.  Tablets
+ * will show full size banners and leaderboard ads in addition to the three
+ * formats above.
+ *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
 public class Banners extends Activity implements OnClickListener, AdListener {
   private AdView adViewBanner;
   private AdView adViewRect;
-  
+  private AdView adViewSmartBanner;
+  private AdView adViewFullSizeBanner;
+  private AdView adViewLeaderboard;
+  /** Used to hide the last AdView that was selected. */
+  private AdView lastVisibleAdView = null;
+
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.banners);
 
-    // Get the adView banner.
+    // Set the ad listener and load an load for each AdView.
+    AdRequest adRequest = AdCatalogUtils.createAdRequest();
     adViewBanner = (AdView) findViewById(R.id.adViewBanner);
-    AdRequest adRequestBanner = new AdRequest();
-    // Set testing according to our preference.
-    if (AdCatalog.isTestMode) {
-      adRequestBanner.addTestDevice(AdRequest.TEST_EMULATOR);
-    }
     adViewBanner.setAdListener(this);
-    // Initiate a generic request to load it with an ad.
-    adViewBanner.loadAd(adRequestBanner);
+    adViewBanner.loadAd(adRequest);
+    adViewSmartBanner = (AdView) findViewById(R.id.adViewSmart);
+    adViewSmartBanner.setAdListener(this);
+    adViewSmartBanner.loadAd(adRequest);
 
-    // Do the same for the medium rectangle ad.
-    adViewRect = (AdView) findViewById(R.id.adViewRect);
-    AdRequest adRequestRect = new AdRequest();
-    if (AdCatalog.isTestMode) {
-      adRequestRect.addTestDevice(AdRequest.TEST_EMULATOR);
+    if (AdCatalogUtils.isExtraLargeScreen(this)) {
+      adViewRect = (AdView) findViewById(R.id.adViewRect);
+      adViewRect.setAdListener(this);
+      adViewRect.loadAd(adRequest);
+      adViewFullSizeBanner = (AdView) findViewById(R.id.adViewFullSize);
+      adViewFullSizeBanner.setAdListener(this);
+      adViewFullSizeBanner.loadAd(adRequest);
+      adViewLeaderboard = (AdView) findViewById(R.id.adViewLeaderboard);
+      adViewLeaderboard.setAdListener(this);
+      adViewLeaderboard.loadAd(adRequest);
     }
-    adViewRect.setAdListener(this);
-    adViewRect.loadAd(adRequestRect);
   }
 
   /** Handles the on click events for each button. */
   @Override
   public void onClick(View view) {
-    final int id = view.getId();
-    switch (id) {
-      // Make the standard banner visible on click.
+    if (lastVisibleAdView != null) {
+      lastVisibleAdView.setVisibility(View.GONE);
+    }
+    switch (view.getId()) {
       case R.id.standardBanner:
-        adViewRect.setVisibility(View.GONE);
         adViewBanner.setVisibility(View.VISIBLE);
+        lastVisibleAdView = adViewBanner;
         break;
-      // Make the medium rectangle visible on click.
       case R.id.mediumRectangle:
-        adViewBanner.setVisibility(View.GONE);
         adViewRect.setVisibility(View.VISIBLE);
+        lastVisibleAdView = adViewRect;
+        break;
+      case R.id.smartBanner:
+        adViewSmartBanner.setVisibility(View.VISIBLE);
+        lastVisibleAdView = adViewSmartBanner;
+        break;
+      case R.id.fullSize:
+        adViewFullSizeBanner.setVisibility(View.VISIBLE);
+        lastVisibleAdView = adViewFullSizeBanner;
+        break;
+      case R.id.leaderboard:
+        adViewLeaderboard.setVisibility(View.VISIBLE);
+        lastVisibleAdView = adViewLeaderboard;
         break;
     }
   }
 
-  /** Overwrite the onDestroy() method to dispose of banners first. */
+  /** Overwrite the onDestroy() method to dispose of the banners first. */
   @Override
   public void onDestroy() {
     if (adViewBanner != null) {
@@ -87,6 +108,15 @@ public class Banners extends Activity implements OnClickListener, AdListener {
     }
     if (adViewRect != null) {
       adViewRect.destroy();
+    }
+    if (adViewSmartBanner != null) {
+      adViewSmartBanner.destroy();
+    }
+    if (adViewFullSizeBanner != null) {
+      adViewFullSizeBanner.destroy();
+    }
+    if (adViewLeaderboard != null) {
+      adViewLeaderboard.destroy();
     }
     super.onDestroy();
   }

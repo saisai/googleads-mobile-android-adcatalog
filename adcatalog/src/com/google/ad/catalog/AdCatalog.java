@@ -1,4 +1,4 @@
-// Copyright 2011, Google Inc. All Rights Reserved.
+// Copyright 2011 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ public class AdCatalog extends Activity implements OnClickListener, AdListener {
     if (loadSplashInterstitial) {
       interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
       interstitial.setAdListener(this);
-      loadInterstitial(interstitial);
+      interstitial.loadAd(AdCatalogUtils.createAdRequest());
     }
   }
 
@@ -92,18 +92,6 @@ public class AdCatalog extends Activity implements OnClickListener, AdListener {
     if (intent != null) {
       startActivity(intent);
     }
-  }
-
-  /** Loads an interstitial.  Used by multiple activities. */
-  static void loadInterstitial(InterstitialAd interstitial) {
-    AdRequest adRequest = new AdRequest();
-    if (AdCatalog.isTestMode) {
-      // This call will add the emulator as a test device.  To add a physical
-      // device for testing, pass in your hashed device ID, which can be found
-      // in the LogCat output when loading an ad on your device.
-      adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
-    }
-    interstitial.loadAd(adRequest);
   }
 
   @Override

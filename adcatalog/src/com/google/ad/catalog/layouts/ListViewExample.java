@@ -45,8 +45,8 @@ public class ListViewExample extends ListActivity {
 
   @Override
   protected void onListItemClick(ListView listView, View view, int position, long id) {
-      String item = (String) getListAdapter().getItem(position);
-      // Clicking an item should bring up toast, different from clicking ad.
-      Toast.makeText(this, item + " selected", Toast.LENGTH_LONG).show();
+    String item = (String) getListAdapter().getItem(position);
+    // Clicking an item should bring up toast, different from clicking ad.
+    Toast.makeText(this, item + " selected", Toast.LENGTH_LONG).show();
   }
 }

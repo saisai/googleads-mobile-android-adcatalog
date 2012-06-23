@@ -14,11 +14,10 @@
 
 package com.google.ad.catalog.layouts;
 
-import com.google.ad.catalog.AdCatalog;
+import com.google.ad.catalog.AdCatalogUtils;
 import com.google.ad.catalog.Constants;
 import com.google.ads.Ad;
 import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
 import com.google.ads.AdRequest.ErrorCode;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -27,20 +26,17 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 
 /**
- * Custom list adapter to embed AdMob ads in a ListView at some specified
- * frequency.
+ * Custom list adapter to embed AdMob ads in a ListView at the top
+ * and bottom of the screen.
  *
  * @author api.rajpara@gmail.com (Raj Parameswaran)
  */
 public class ListViewExampleListAdapter extends BaseAdapter implements AdListener {
   private static final String LOGTAG = "ListViewExampleListAdapter";
 
-  // Frequency of embedded AdMob ads within the ListView (every n list items).
-  private static final int FREQUENCY_ADS = 10;
   private final Activity activity;
   private final BaseAdapter delegate;
 
@@ -52,50 +48,33 @@ public class ListViewExampleListAdapter extends BaseAdapter implements AdListene
   @Override
   public int getCount() {
     // Total count includes list items and ads.
-    return (int) (delegate.getCount() + Math.ceil(delegate.getCount() / FREQUENCY_ADS) + 1);
+    return delegate.getCount() + 2;
   }
 
   @Override
   public Object getItem(int position) {
+    // Return null if an item is an ad.  Otherwise return the delegate item.
+    if (isItemAnAd(position)) {
+      return null;
+    }
     return delegate.getItem(getOffsetPosition(position));
   }
 
   @Override
   public long getItemId(int position) {
-    return delegate.getItemId(getOffsetPosition(position));
+    return position;
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    if ((position % FREQUENCY_ADS) == 0) {
+    if (isItemAnAd(position)) {
       if (convertView instanceof AdView) {
         Log.d(LOGTAG, "I am reusing an ad");
         return convertView;
       } else {
         Log.d(LOGTAG, "I am creating a new ad");
-        AdView adView = new AdView(activity, AdSize.BANNER, Constants.getAdmobId(activity));
-
-        // Disable focus for AdView and its subviews so you can't get to it
-        // with the trackpad.
-        for (int i = 0; i < adView.getChildCount(); i++) {
-          adView.getChildAt(i).setFocusable(false);
-        }
-        adView.setFocusable(false);
-
-        // Convert the default layout parameters so that they play nice with
-        // ListView.
-        float density = activity.getResources().getDisplayMetrics().density;
-        int height = Math.round(AdSize.BANNER.getHeight() * density);
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-            AbsListView.LayoutParams.FILL_PARENT,
-            height);
-        adView.setLayoutParams(params);
-
-        AdRequest adRequest = new AdRequest();
-        if (AdCatalog.isTestMode) {
-          adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
-        }
-        adView.loadAd(adRequest);
+        AdView adView = new AdView(activity, AdSize.SMART_BANNER, Constants.getAdmobId(activity));
+        adView.loadAd(AdCatalogUtils.createAdRequest());
         return adView;
       }
     } else {
@@ -110,7 +89,7 @@ public class ListViewExampleListAdapter extends BaseAdapter implements AdListene
 
   @Override
   public int getItemViewType(int position) {
-    if ((position % FREQUENCY_ADS) == 0) {
+    if (isItemAnAd(position)) {
       return delegate.getViewTypeCount();
     } else {
       return delegate.getItemViewType(getOffsetPosition(position));
@@ -124,8 +103,12 @@ public class ListViewExampleListAdapter extends BaseAdapter implements AdListene
 
   @Override
   public boolean isEnabled(int position) {
-      return ((position % FREQUENCY_ADS) != 0) &&
-               delegate.isEnabled(getOffsetPosition(position));
+    return (!isItemAnAd(position)) && delegate.isEnabled(getOffsetPosition(position));
+  }
+
+  private boolean isItemAnAd(int position) {
+    // Place an ad at the first and last list view positions.
+    return (position == 0 || position == (getCount() - 1));
   }
 
   @Override
@@ -154,6 +137,6 @@ public class ListViewExampleListAdapter extends BaseAdapter implements AdListene
   }
 
   private int getOffsetPosition(int position) {
-    return (position - (int) Math.ceil(position / FREQUENCY_ADS) - 1);
+    return position - 1;
   }
 }

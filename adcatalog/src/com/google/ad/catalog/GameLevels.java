@@ -1,4 +1,4 @@
-// Copyright 2011, Google Inc. All Rights Reserved.
+// Copyright 2011 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import android.widget.ViewFlipper;
 /**
  * This activity shows an example of how to display an interstitial in between 
  * game levels.
- * 
+ *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
 public class GameLevels extends Activity implements OnClickListener, AdListener {
@@ -44,7 +44,7 @@ public class GameLevels extends Activity implements OnClickListener, AdListener 
     // Start loading the interstitial.
     interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
     interstitial.setAdListener(this);
-    AdCatalog.loadInterstitial(interstitial);
+    interstitial.loadAd(AdCatalogUtils.createAdRequest());
   }
 
   /** Handles the on click events for each button. */
@@ -56,7 +56,7 @@ public class GameLevels extends Activity implements OnClickListener, AdListener 
         if (interstitial.isReady()) {
           interstitial.show();
         } else {
-          AdCatalog.loadInterstitial(interstitial);
+          interstitial.loadAd(AdCatalogUtils.createAdRequest());
           final ViewFlipper viewFlipper = (ViewFlipper) findViewById(R.id.levelFlipper);
           viewFlipper.showNext();
         }

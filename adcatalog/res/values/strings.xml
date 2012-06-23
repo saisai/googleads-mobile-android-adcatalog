@@ -15,7 +15,10 @@
     <string name="advancedLayouts_scroll_view">ScrollView</string>
     <string name="banners_title">Banners</string>
     <string name="banners_standard_dimensions">320x50</string>
-    <string name="banners_iab_mrect_dimensions">300x250</string>
+    <string name="banners_mrect_dimensions">300x250</string>
+    <string name="banners_smart_dimensions">Smart Banner</string>
+    <string name="banners_fullsize_dimensions">468x60</string>
+    <string name="banners_leaderboard_dimensions">728x90</string>
     <string name="interstitials_title">Interstitials</string>
     <string name="interstitials_basic">Basic</string>
     <string name="interstitials_game_levels">Game Levels</string>

@@ -15,10 +15,11 @@ limitations under the License.
 ========================================================================
 
 The is the Ad Catalog for Android.  The catalog was written and tested with the
-Google Admob Ads SDK version 4.3.1, and supports Android 1.6 or higher.
+Google Admob Ads SDK version 6.0.1, and supports Android 1.6 or higher.
 
 The catalog provides:
-- A simple banner example featuring a standard banner and medium rectangle ad.
+- A simple banner example featuring a standard banner and smart banner on
+  phones and additional formats on tablets.
 - Four banner layout examples:
   1. TabbedView - a banner ad is persisted across tabs.
   2. ListView - a banner ad is embedded into a list every k list items.
@@ -34,6 +35,7 @@ The catalog provides:
   5. Splash - if this option is set, an interstitial will be displayed the next
               time the app loads.
 - Test mode toggle - determines whether to request test ads.
+- Support for tablets.
 
 Requirements:
 - Android SDK 3.2 or higher

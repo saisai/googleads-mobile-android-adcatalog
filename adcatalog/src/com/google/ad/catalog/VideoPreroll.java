@@ -1,4 +1,4 @@
-// Copyright 2011, Google Inc. All Rights Reserved.
+// Copyright 2011 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import android.view.View.OnClickListener;
 
 /**
  * This activity features interstitial ads before going to a youtube link.
- * 
+ *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
 public class VideoPreroll extends Activity implements OnClickListener {
@@ -44,8 +44,8 @@ public class VideoPreroll extends Activity implements OnClickListener {
 
     videoHandler = new VideoHandler();
     interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
-    interstitial.setAdListener(videoHandler);    
-    AdCatalog.loadInterstitial(interstitial);   
+    interstitial.setAdListener(videoHandler);
+    interstitial.loadAd(AdCatalogUtils.createAdRequest());
   }
 
   /** Handles the on click events for each button. */
@@ -66,7 +66,7 @@ public class VideoPreroll extends Activity implements OnClickListener {
     if (interstitial.isReady()) {
       interstitial.show();
     } else {
-      AdCatalog.loadInterstitial(interstitial);
+      interstitial.loadAd(AdCatalogUtils.createAdRequest());
       videoHandler.playVideo();
     }
   }

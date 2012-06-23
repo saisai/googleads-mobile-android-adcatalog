@@ -7,9 +7,9 @@
     android:layout_height="fill_parent">
     <com.google.ads.AdView android:id="@+id/openGLAdView"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="90dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         ads:adUnitId="@string/admob_id"
-        ads:adSize="BANNER"/>
+        ads:adSize="IAB_LEADERBOARD"/>
 </RelativeLayout>
