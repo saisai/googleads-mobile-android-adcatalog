@@ -59,7 +59,7 @@ Getting started with the Ad Catalog with Eclipse:
 Your application should run properly.
 
 Note:
--( Test mode currently only gets test ads in the emulator.  To get test ads in
+  Test mode currently only gets test ads in the emulator.  To get test ads in
   test mode on your device, call adRequest.addTestDevice("YOUR_DEVICE_ID")
   method before calling the loadAd method.  Your device ID can be found in the
   LogCat output when loading an ad on your device.
