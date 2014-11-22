@@ -14,14 +14,11 @@
 
 package com.google.ad.catalog;
 
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -33,7 +30,7 @@ import android.view.View.OnClickListener;
  *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
-public class Banners extends Activity implements OnClickListener, AdListener {
+public class Banners extends Activity implements OnClickListener {
   private AdView adViewBanner;
   private AdView adViewRect;
   private AdView adViewSmartBanner;
@@ -51,21 +48,21 @@ public class Banners extends Activity implements OnClickListener, AdListener {
     // Set the ad listener and load an load for each AdView.
     AdRequest adRequest = AdCatalogUtils.createAdRequest();
     adViewBanner = (AdView) findViewById(R.id.adViewBanner);
-    adViewBanner.setAdListener(this);
+    adViewBanner.setAdListener(new LogAndToastAdListener(this));
     adViewBanner.loadAd(adRequest);
     adViewSmartBanner = (AdView) findViewById(R.id.adViewSmart);
-    adViewSmartBanner.setAdListener(this);
+    adViewSmartBanner.setAdListener(new LogAndToastAdListener(this));
     adViewSmartBanner.loadAd(adRequest);
 
     if (AdCatalogUtils.isExtraLargeScreen(this)) {
       adViewRect = (AdView) findViewById(R.id.adViewRect);
-      adViewRect.setAdListener(this);
+      adViewRect.setAdListener(new LogAndToastAdListener(this));
       adViewRect.loadAd(adRequest);
       adViewFullSizeBanner = (AdView) findViewById(R.id.adViewFullSize);
-      adViewFullSizeBanner.setAdListener(this);
+      adViewFullSizeBanner.setAdListener(new LogAndToastAdListener(this));
       adViewFullSizeBanner.loadAd(adRequest);
       adViewLeaderboard = (AdView) findViewById(R.id.adViewLeaderboard);
-      adViewLeaderboard.setAdListener(this);
+      adViewLeaderboard.setAdListener(new LogAndToastAdListener(this));
       adViewLeaderboard.loadAd(adRequest);
     }
   }
@@ -121,28 +118,5 @@ public class Banners extends Activity implements OnClickListener, AdListener {
     super.onDestroy();
   }
 
-  @Override
-  public void onReceiveAd(Ad ad) {
-    Log.d("Banners_class", "I received an ad");
-  }
 
-  @Override
-  public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
-    Log.d("Banners_class", "I failed to receive an ad");
-  }
-
-  @Override
-  public void onPresentScreen(Ad ad) {
-    Log.d("Banners_class", "Presenting screen");
-  }
-
-  @Override
-  public void onDismissScreen(Ad ad) {
-    Log.d("Banners_class", "Dismissing screen");
-  }
-
-  @Override
-  public void onLeaveApplication(Ad ad) {
-    Log.d("Banners_class", "Leaving application");
-  }
 }

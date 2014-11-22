@@ -14,10 +14,7 @@
 
 package com.google.ad.catalog;
 
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.InterstitialAd;
+import com.google.android.gms.ads.InterstitialAd;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,7 +31,7 @@ import android.widget.ToggleButton;
  *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
-public class Interstitials extends Activity implements OnClickListener, AdListener {
+public class Interstitials extends Activity implements OnClickListener {
   private InterstitialAd interstitial;
 
   /** Called when the activity is first created. */
@@ -43,8 +40,17 @@ public class Interstitials extends Activity implements OnClickListener, AdListen
     super.onCreate(savedInstanceState);
     setContentView(R.layout.interstitials);
 
-    interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
-    interstitial.setAdListener(this);
+    interstitial = new InterstitialAd(this);
+    interstitial.setAdUnitId(Constants.getAdmobId(this));
+    interstitial.setAdListener(new LogAndToastAdListener(this) {
+      @Override
+      public void onAdLoaded() {
+        super.onAdLoaded();
+        if (interstitial.isLoaded()) {
+          interstitial.show();
+        }
+      }
+    });
 
     final ToggleButton splashToggleButton = (ToggleButton) findViewById(R.id.toggleSplash);
     if (splashToggleButton != null) {
@@ -90,31 +96,4 @@ public class Interstitials extends Activity implements OnClickListener, AdListen
     }
   }
 
-  @Override
-  public void onReceiveAd(Ad ad) {
-    Log.d("Interstitials_Class", "I received an ad");
-    if (interstitial.isReady()) {
-      interstitial.show();
-    }
-  }
-
-  @Override
-  public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
-    Log.d("Interstitials_Class", "I failed to receive an ad");
-  }
-
-  @Override
-  public void onPresentScreen(Ad ad) {
-    Log.d("Interstitials_Class", "Presenting screen");
-  }
-
-  @Override
-  public void onDismissScreen(Ad ad) {
-    Log.d("Interstitials_Class", "Dismissing screen");
-  }
-
-  @Override
-  public void onLeaveApplication(Ad ad) {
-    Log.d("Interstitials_Class", "Leaving application");
-  }
 }

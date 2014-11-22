@@ -14,16 +14,12 @@
 
 package com.google.ad.catalog;
 
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.InterstitialAd;
+import com.google.android.gms.ads.InterstitialAd;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -43,7 +39,8 @@ public class VideoPreroll extends Activity implements OnClickListener {
     setContentView(R.layout.videopreroll);
 
     videoHandler = new VideoHandler();
-    interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
+    interstitial = new InterstitialAd(this);
+    interstitial.setAdUnitId(Constants.getAdmobId(this));
     interstitial.setAdListener(videoHandler);
     interstitial.loadAd(AdCatalogUtils.createAdRequest());
   }
@@ -63,7 +60,7 @@ public class VideoPreroll extends Activity implements OnClickListener {
         videoHandler.setLink(Constants.PACKAGE_TRACKING_LINK);
         break;
     }
-    if (interstitial.isReady()) {
+    if (interstitial.isLoaded()) {
       interstitial.show();
     } else {
       interstitial.loadAd(AdCatalogUtils.createAdRequest());
@@ -76,11 +73,12 @@ public class VideoPreroll extends Activity implements OnClickListener {
    * 
    * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
    */
-  class VideoHandler implements AdListener {
+  class VideoHandler extends LogAndToastAdListener {
     private String youtubeLink;
 
     /** Instantiates a new VideoHandler object. */
     public VideoHandler() {
+      super(VideoPreroll.this);
       youtubeLink = "";
     }
 
@@ -95,29 +93,9 @@ public class VideoPreroll extends Activity implements OnClickListener {
     }
 
     @Override
-    public void onReceiveAd(Ad ad) {
-      Log.d("Video_Handler", "I received an ad");
-    }
-
-    @Override
-    public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
-      Log.d("Video_Handler", "I failed to receive an ad");
-    }
-
-    @Override
-    public void onPresentScreen(Ad ad) {
-      Log.d("Video_Handler", "Presenting screen");
-    }
-
-    @Override
-    public void onDismissScreen(Ad ad) {
-      Log.d("Video_Handler", "Dismissing screen");
+    public void onAdClosed() {
+      super.onAdClosed();
       playVideo();
-    }
-
-    @Override
-    public void onLeaveApplication(Ad ad) {
-      Log.d("Video_Handler", "Leaving application");
     }
   }
 }

@@ -14,10 +14,9 @@
 
 package com.google.ad.catalog.layouts;
 
-import com.google.ad.catalog.AdCatalog;
+import com.google.ad.catalog.AdCatalogUtils;
 import com.google.ad.catalog.R;
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdView;
 
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
@@ -40,19 +39,15 @@ public class OpenGLViewExample extends Activity {
 
     // Load the AdView with a request.
     AdView adView = (AdView) findViewById(R.id.openGLAdView);
-    AdRequest adRequest = new AdRequest();
-    if (AdCatalog.isTestMode) {
-      adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
-    }
-    adView.loadAd(adRequest);
+    adView.loadAd(AdCatalogUtils.createAdRequest());
 
     // Initialize the GLSurfaceView and add it to the layout above the AdView.
     this.glSurfaceView = new GLSurfaceView(this);
     this.glSurfaceView.setRenderer(new CubeRenderer(true));
     RelativeLayout layout = (RelativeLayout) findViewById(R.id.openGLLayout);
     RelativeLayout.LayoutParams params =
-        new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,
-                                        LayoutParams.FILL_PARENT);
+        new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+                                        LayoutParams.MATCH_PARENT);
     params.addRule(RelativeLayout.ABOVE, R.id.openGLAdView);
     layout.addView(this.glSurfaceView, params);
   }

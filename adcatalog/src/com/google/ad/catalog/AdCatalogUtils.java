@@ -14,7 +14,7 @@
 
 package com.google.ad.catalog;
 
-import com.google.ads.AdRequest;
+import com.google.android.gms.ads.AdRequest;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -25,6 +25,9 @@ import android.content.res.Configuration;
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
 public class AdCatalogUtils {
+
+  public static final String LOG_TAG = "AdCatalog";
+  
   /**
    * Prevent instantiation.
    */
@@ -54,13 +57,13 @@ public class AdCatalogUtils {
    * @return An AdRequest to use when loading an ad.
    */
   public static AdRequest createAdRequest() {
-    AdRequest adRequest = new AdRequest();
+    AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
     if (AdCatalog.isTestMode) {
       // This call will add the emulator as a test device.  To add a physical
       // device for testing, pass in your hashed device ID, which can be found
       // in the LogCat output when loading an ad on your device.
-      adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
+      adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
     }
-    return adRequest;
+    return adRequestBuilder.build();
   }
 }

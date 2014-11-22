@@ -16,11 +16,9 @@ package com.google.ad.catalog.layouts;
 
 import com.google.ad.catalog.AdCatalogUtils;
 import com.google.ad.catalog.Constants;
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest.ErrorCode;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+import com.google.ad.catalog.LogAndToastAdListener;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 import android.app.Activity;
 import android.util.Log;
@@ -34,7 +32,7 @@ import android.widget.BaseAdapter;
  *
  * @author api.rajpara@gmail.com (Raj Parameswaran)
  */
-public class ListViewExampleListAdapter extends BaseAdapter implements AdListener {
+public class ListViewExampleListAdapter extends BaseAdapter {
   private static final String LOGTAG = "ListViewExampleListAdapter";
 
   private final Activity activity;
@@ -73,8 +71,11 @@ public class ListViewExampleListAdapter extends BaseAdapter implements AdListene
         return convertView;
       } else {
         Log.d(LOGTAG, "I am creating a new ad");
-        AdView adView = new AdView(activity, AdSize.SMART_BANNER, Constants.getAdmobId(activity));
+        AdView adView = new AdView(activity);
+        adView.setAdUnitId(Constants.getAdmobId(activity));
+        adView.setAdSize(AdSize.SMART_BANNER);
         adView.loadAd(AdCatalogUtils.createAdRequest());
+        adView.setAdListener(new LogAndToastAdListener(activity));
         return adView;
       }
     } else {
@@ -109,31 +110,6 @@ public class ListViewExampleListAdapter extends BaseAdapter implements AdListene
   private boolean isItemAnAd(int position) {
     // Place an ad at the first and last list view positions.
     return (position == 0 || position == (getCount() - 1));
-  }
-
-  @Override
-  public void onDismissScreen(Ad arg0) {
-    Log.d(LOGTAG, "Dismissing screen");
-  }
-
-  @Override
-  public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
-    Log.d(LOGTAG, "I failed to receive an ad");
-  }
-
-  @Override
-  public void onLeaveApplication(Ad arg0) {
-    Log.d(LOGTAG, "Leaving application");
-  }
-
-  @Override
-  public void onPresentScreen(Ad arg0) {
-    Log.d(LOGTAG, "Presenting screen");
-  }
-
-  @Override
-  public void onReceiveAd(Ad arg0) {
-    Log.d(LOGTAG, "I received an ad");
   }
 
   private int getOffsetPosition(int position) {

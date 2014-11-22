@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <ScrollView android:id="@+id/scrollLayout"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:layout_below="@+id/adView">
-        <LinearLayout android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
+        <LinearLayout android:layout_height="match_parent"
+            android:layout_width="match_parent">
             <TextView android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/advancedLayouts_scroll_view_lorem_ipsum"/>
         </LinearLayout>
     </ScrollView>
-    <com.google.ads.AdView android:id="@id/adView"
-        android:layout_width="fill_parent"
+    <com.google.android.gms.ads.AdView android:id="@id/adView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         ads:adUnitId="@string/admob_id"

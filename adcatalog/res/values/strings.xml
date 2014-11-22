@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AdCatalog</string>
-    <string name="admob_id">INSERT_YOUR_ADMOB_ID_HERE</string>
+    <string name="admob_id">INSERT_YOUR_AD_UNIT_ID_HERE</string>
     <string name="adCatalog_banners">Banners</string>
     <string name="adCatalog_interstitials">Interstitials</string>
     <string name="adCatalog_advanced_layouts">Advanced Layouts</string>
     <string name="adCatalog_test_mode_off">Test Mode Off</string>
     <string name="adCatalog_test_mode_on">Test Mode On</string>
+    <string name="adCatalog_video">Video</string>
     <string name="advancedLayouts_title">Advanced Layouts</string>
     <string name="advancedLayouts_examples">Examples</string>
     <string name="advancedLayouts_tabbed_view">TabbedView</string>
@@ -26,6 +27,21 @@
     <string name="interstitials_page_swipe">Page Swipe</string>
     <string name="interstitials_use_cases">Use Cases</string>
     <string name="interstitials_splash">Splash</string>
+    <string name="video_title">Video</string>
+    <string name="video_examples">Examples</string>
+    <string-array name="video_ad_list">
+        <item>Instream 1</item>
+        <item>AdSense Skippable</item>
+        <item>Wrapper</item>
+        <item>AdsList</item>
+    </string-array>
+    <string-array name="video_ad_tags">
+        <item><![CDATA[http://pubads.g.doubleclick.net/gampad/ads?sz=400x300&iu=%2F6062%2Fhanna_MA_group%2Fvideo_comp_app&ciu_szs=&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&m_ast=vast&url=[referrer_url]&correlator=[timestamp]]]></item>
+        <item><![CDATA[http://googleads.g.doubleclick.net/pagead/ads?eid=41351061&ad_type=skippablevideo&client=ca-video-pub-4975756195050566&videoad_start_delay=0&description_url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DSS7HCA9U0hQ&max_ad_duration=60000]]></item>
+        <item><![CDATA[http://pubads.g.doubleclick.net/gampad/ads?sz=400x300&iu=%2F6062%2Fhanna_MA_group%2Fwrapper_with_comp&ciu_szs=728x90&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&m_ast=vast&url=[referrer_url]&correlator=[timestamp]]]></item>
+        <item><![CDATA[http://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=%2F15018773%2Feverything2&ciu_szs=300x250%2C468x60%2C728x90&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&correlator=[timestamp]&cmsid=133&vid=10XWSh7W4so&ad_rule=1]]></item>
+    </string-array>
+    <string name="video_companion_placeholder">Companion Slot</string>
     <string name="videoPreroll_title">Video Preroll</string>
     <string name="videoPreroll_earthquake">Earthquake</string>
     <string name="videoPreroll_fill_in_the_blanks">Fill In The Blanks</string>

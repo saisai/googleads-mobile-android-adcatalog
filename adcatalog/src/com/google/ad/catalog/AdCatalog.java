@@ -15,10 +15,8 @@
 package com.google.ad.catalog;
 
 import com.google.ad.catalog.layouts.AdvancedLayouts;
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.InterstitialAd;
+import com.google.ad.catalog.layouts.Video;
+import com.google.android.gms.ads.InterstitialAd;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -38,7 +36,7 @@ import android.widget.ToggleButton;
  *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
-public class AdCatalog extends Activity implements OnClickListener, AdListener {
+public class AdCatalog extends Activity implements OnClickListener {
   private InterstitialAd interstitial;
   private Button bannerButton;
   private Button interstitialButton;
@@ -59,8 +57,39 @@ public class AdCatalog extends Activity implements OnClickListener, AdListener {
     SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
     boolean loadSplashInterstitial = settings.getBoolean(Constants.PREFS_SPLASH_KEY, false);
     if (loadSplashInterstitial) {
-      interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
-      interstitial.setAdListener(this);
+      interstitial = new InterstitialAd(this);
+      interstitial.setAdUnitId(Constants.getAdmobId(this));
+      interstitial.setAdListener(new LogAndToastAdListener(this) {
+        @Override
+        public void onAdLoaded() {
+          super.onAdLoaded();
+          interstitial.show();
+        }
+
+        @Override
+        public void onAdOpened() {
+          super.onAdOpened();
+          // Deactivate buttons so interstitial returns before they can be clicked.
+          if (bannerButton != null) {
+            bannerButton.setEnabled(false);
+          }
+          if (interstitialButton != null) {
+            interstitialButton.setEnabled(false);
+          }
+        }
+
+        @Override
+        public void onAdClosed() {
+          super.onAdClosed();
+          // Reactivate buttons after interstitial is dismissed.
+          if (bannerButton != null) {
+            bannerButton.setEnabled(true);
+          }
+          if (interstitialButton != null) {
+            interstitialButton.setEnabled(true);
+          }
+        }
+      });
       interstitial.loadAd(AdCatalogUtils.createAdRequest());
     }
   }
@@ -83,6 +112,10 @@ public class AdCatalog extends Activity implements OnClickListener, AdListener {
       case R.id.AdvancedLayouts:
         intent = new Intent(AdCatalog.this, AdvancedLayouts.class);
         break;
+      // Video button click - go to video activity.
+      case R.id.Video:
+        intent = new Intent(AdCatalog.this, Video.class);
+        break;
       // Test Ads toggle click - change Test Mode preference.
       case R.id.toggleTestMode:
         isTestMode = !isTestMode;
@@ -93,44 +126,5 @@ public class AdCatalog extends Activity implements OnClickListener, AdListener {
       startActivity(intent);
     }
   }
-
-  @Override
-  public void onReceiveAd(Ad ad) {
-    Log.d("AdExamples_Class", "I received an ad");
-    interstitial.show();
-  }
-
-  @Override
-  public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
-    Log.d("AdExamples_Class", "I failed to receive an ad");
-  }
-
-  @Override
-  public void onPresentScreen(Ad ad) {
-    Log.d("AdExamples_Class", "Presenting screen");
-    // Deactivate buttons so interstitial returns before they can be clicked.
-    if (bannerButton != null) {
-      bannerButton.setEnabled(false);
-    }
-    if (interstitialButton != null) {
-      interstitialButton.setEnabled(false);
-    }
-  }
-
-  @Override
-  public void onDismissScreen(Ad ad) {
-    Log.d("AdExamples_Class", "Dismissing screen");
-    // Reactivate buttons after interstitial is dismissed.
-    if (bannerButton != null) {
-      bannerButton.setEnabled(true);
-    }
-    if (interstitialButton != null) {
-      interstitialButton.setEnabled(true);
-    }
-  }
-
-  @Override
-  public void onLeaveApplication(Ad ad) {
-    Log.d("AdExamples_Class", "Leaving application");
-  }
+  
 }

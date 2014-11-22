@@ -14,6 +14,7 @@
 
 package com.google.ad.catalog.layouts;
 
+import com.google.ad.catalog.AdCatalogUtils;
 import com.google.ad.catalog.R;
 
 import android.content.Context;
@@ -69,6 +70,7 @@ public class TabbedViewExample extends FragmentActivity {
     if (savedInstanceState != null) {
       this.tabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
     }
+    AdCatalogUtils.createAdRequest();
   }
 
   @Override
@@ -197,6 +199,7 @@ public class TabbedViewExample extends FragmentActivity {
       if (args != null && args.getInt("layoutResource") != 0) {
         this.layoutResource = args.getInt("layoutResource");
       }
+
     }
 
     @Override

@@ -14,24 +14,20 @@
 
 package com.google.ad.catalog.layouts;
 
-import com.google.ad.catalog.AdCatalog;
+import com.google.ad.catalog.AdCatalogUtils;
+import com.google.ad.catalog.LogAndToastAdListener;
 import com.google.ad.catalog.R;
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdView;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 /**
  * Example of a ScrollView with an AdMob banner.
  *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
-public class ScrollViewExample extends Activity implements AdListener {
-  private static final String LOGTAG = "ScrollViewExample";
+public class ScrollViewExample extends Activity {
   private AdView adView;
 
   /** Called when the activity is first created. */
@@ -41,13 +37,8 @@ public class ScrollViewExample extends Activity implements AdListener {
     setContentView(R.layout.scrollviewexample);
 
     adView = (AdView) findViewById(R.id.adView);
-    AdRequest adRequestBanner = new AdRequest();
-    // Set testing according to our preference.
-    if (AdCatalog.isTestMode) {
-      adRequestBanner.addTestDevice(AdRequest.TEST_EMULATOR);
-    }
-    adView.setAdListener(this);
-    adView.loadAd(adRequestBanner);
+    adView.setAdListener(new LogAndToastAdListener(this));
+    adView.loadAd(AdCatalogUtils.createAdRequest());
   }
 
   /** Overwrite the onDestroy() method to dispose of banners first. */
@@ -59,28 +50,4 @@ public class ScrollViewExample extends Activity implements AdListener {
     super.onDestroy();
   }
 
-  @Override
-  public void onReceiveAd(Ad ad) {
-    Log.d(LOGTAG, "I received an ad");
-  }
-
-  @Override
-  public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
-    Log.d(LOGTAG, "I failed to receive an ad");
-  }
-
-  @Override
-  public void onPresentScreen(Ad ad) {
-    Log.d(LOGTAG, "Presenting screen");
-  }
-
-  @Override
-  public void onDismissScreen(Ad ad) {
-    Log.d(LOGTAG, "Dismissing screen");
-  }
-
-  @Override
-  public void onLeaveApplication(Ad ad) {
-    Log.d(LOGTAG, "Leaving application");
-  }
 }

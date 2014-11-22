@@ -14,14 +14,10 @@
 
 package com.google.ad.catalog;
 
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.InterstitialAd;
+import com.google.android.gms.ads.InterstitialAd;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -34,7 +30,7 @@ import android.widget.ViewFlipper;
  *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
-public class PageSwipe extends Activity implements AdListener, OnTouchListener {
+public class PageSwipe extends Activity implements OnTouchListener {
   private InterstitialAd interstitial;
   private float downXValue;
 
@@ -47,8 +43,9 @@ public class PageSwipe extends Activity implements AdListener, OnTouchListener {
     LinearLayout layout = (LinearLayout) findViewById(R.id.swipe_main);
     layout.setOnTouchListener(this);
 
-    interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
-    interstitial.setAdListener(this);
+    interstitial = new InterstitialAd(this);
+    interstitial.setAdUnitId(Constants.getAdmobId(this));
+    interstitial.setAdListener(new LogAndToastAdListener(this));
     interstitial.loadAd(AdCatalogUtils.createAdRequest());
   }
 
@@ -80,35 +77,11 @@ public class PageSwipe extends Activity implements AdListener, OnTouchListener {
 
   /** Shows the interstitial, or loads a new interstitial if one is not ready. */
   public void showInterstitial() {
-    if (interstitial.isReady()) {
+    if (interstitial.isLoaded()) {
       interstitial.show();
     } else {
       interstitial.loadAd(AdCatalogUtils.createAdRequest());
     }
   }
 
-  @Override
-  public void onReceiveAd(Ad ad) {
-    Log.d("PageSwipe_Class", "I received an ad");
-  }
-
-  @Override
-  public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
-    Log.d("PageSwipe_Class", "I failed to receive an ad");
-  }
-
-  @Override
-  public void onPresentScreen(Ad ad) {
-    Log.d("PageSwipe_Class", "Presenting screen");
-  }
-
-  @Override
-  public void onDismissScreen(Ad ad) {
-    Log.d("PageSwipe_Class", "Dismissing screen");
-  }
-
-  @Override
-  public void onLeaveApplication(Ad ad) {
-    Log.d("PageSwipe_Class", "Leaving application");
-  }
 }

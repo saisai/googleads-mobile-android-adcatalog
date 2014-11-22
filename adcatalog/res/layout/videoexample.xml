@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <FrameLayout android:id="@+id/videoHolder"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_weight="1" />
+    <LinearLayout android:id="@+id/spacer"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:orientation="vertical" />
+    <FrameLayout android:id="@+id/companionFrame"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+        <TextView android:id="@+id/companionPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/video_companion_placeholder"
+            android:textSize="25sp"
+            android:gravity="center" />
+    </FrameLayout>
+    <ScrollView android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_weight=".1" >
+        <TextView android:id="@+id/log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+</LinearLayout>

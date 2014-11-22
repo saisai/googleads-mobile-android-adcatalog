@@ -14,14 +14,10 @@
 
 package com.google.ad.catalog;
 
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.InterstitialAd;
+import com.google.android.gms.ads.InterstitialAd;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ViewFlipper;
@@ -32,7 +28,7 @@ import android.widget.ViewFlipper;
  *
  * @author api.eleichtenschl@gmail.com (Eric Leichtenschlag)
  */
-public class GameLevels extends Activity implements OnClickListener, AdListener {
+public class GameLevels extends Activity implements OnClickListener {
   private InterstitialAd interstitial;
 
   /** Called when the activity is first created. */
@@ -42,8 +38,16 @@ public class GameLevels extends Activity implements OnClickListener, AdListener 
     setContentView(R.layout.gamelevels);
 
     // Start loading the interstitial.
-    interstitial = new InterstitialAd(this, Constants.getAdmobId(this));
-    interstitial.setAdListener(this);
+    interstitial = new InterstitialAd(this);
+    interstitial.setAdUnitId(Constants.getAdmobId(this));
+    interstitial.setAdListener(new LogAndToastAdListener(this) {
+      @Override
+      public void onAdClosed() {
+        super.onAdClosed();
+        final ViewFlipper viewFlipper = (ViewFlipper) findViewById(R.id.levelFlipper);
+        viewFlipper.showNext();
+      }
+    });
     interstitial.loadAd(AdCatalogUtils.createAdRequest());
   }
 
@@ -53,7 +57,7 @@ public class GameLevels extends Activity implements OnClickListener, AdListener 
     final int id = view.getId();
     switch (id) {
       case R.id.gameNextButton:
-        if (interstitial.isReady()) {
+        if (interstitial.isLoaded()) {
           interstitial.show();
         } else {
           interstitial.loadAd(AdCatalogUtils.createAdRequest());
@@ -62,32 +66,5 @@ public class GameLevels extends Activity implements OnClickListener, AdListener 
         }
         break;
     }
-  }
-
-  @Override
-  public void onReceiveAd(Ad ad) {
-    Log.d("GameLevels_Class", "I received an ad");
-  }
-
-  @Override
-  public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
-    Log.d("GameLevels_Class", "I failed to receive an ad");
-  }
-
-  @Override
-  public void onPresentScreen(Ad ad) {
-    Log.d("GameLevels_Class", "Presenting screen");
-  }
-
-  @Override
-  public void onDismissScreen(Ad ad) {
-    Log.d("GameLevels_Class", "Dismissing screen");
-    final ViewFlipper viewFlipper = (ViewFlipper) findViewById(R.id.levelFlipper);
-    viewFlipper.showNext();
-  }
-
-  @Override
-  public void onLeaveApplication(Ad ad) {
-    Log.d("GameLevels_Class", "Leaving application");
   }
 }
